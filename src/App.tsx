@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC } from 'react';
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider
+} from 'react-router-dom';
+import Content from './components/Content/Content';
+import Login from './components/Auth/Login';
+import Registration from './components/Auth/Registration';
+import AuthProvider from './hoc/AuthProvider';
 
-function App() {
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route>
+    <Route path='/' element={<AuthProvider />} >
+      <Route index element={<Content />} />
+    </Route>
+
+    <Route path='login' element={<Login />} />
+    <Route path='registration' element={<Registration />} />
+
+  </Route>
+))
+
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router} />
   );
 }
 
